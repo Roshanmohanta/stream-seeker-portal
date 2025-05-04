@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -267,7 +266,8 @@ const CollegeDetail = () => {
                             </span>{" "}
                             ₹
                             {(
-                              college.admissionFees * courses[0]?.duration.split(" ")[0]
+                              college.admissionFees * 
+                              (courses[0] ? parseInt(courses[0].duration.split(" ")[0]) || 1 : 1)
                             ).toLocaleString()}
                           </p>
                           <p className="text-xs text-gray-500 mt-2">

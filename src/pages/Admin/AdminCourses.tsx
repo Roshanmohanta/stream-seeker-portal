@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,7 @@ export default function AdminCourses() {
     description: "",
     duration: "",
     eligibility: "",
-    careerProspects: [""],
+    careerProspects: [],
     image: "",
   });
 
@@ -59,9 +58,14 @@ export default function AdminCourses() {
   const handleAddCourse = () => {
     // In a real app, this would send data to API
     const courseId = `course-${(courseList.length + 1).toString().padStart(3, '0')}`;
-    const careerProspects = typeof newCourse.careerProspects === 'string' 
-      ? newCourse.careerProspects.split(',').map(item => item.trim()) 
-      : newCourse.careerProspects || [];
+    
+    // Handle careerProspects safely
+    let careerProspects: string[] = [];
+    if (typeof newCourse.careerProspects === 'string') {
+      careerProspects = newCourse.careerProspects.split(',').map(item => item.trim());
+    } else if (Array.isArray(newCourse.careerProspects)) {
+      careerProspects = newCourse.careerProspects;
+    }
       
     const course: Course = {
       id: courseId,
@@ -82,7 +86,7 @@ export default function AdminCourses() {
       description: "",
       duration: "",
       eligibility: "",
-      careerProspects: [""],
+      careerProspects: [],
       image: "",
     });
 
@@ -95,9 +99,13 @@ export default function AdminCourses() {
   const handleEditCourse = () => {
     if (!editingCourse) return;
 
-    const careerProspects = typeof editingCourse.careerProspects === 'string' 
-      ? editingCourse.careerProspects.split(',').map(item => item.trim()) 
-      : editingCourse.careerProspects || [];
+    // Handle careerProspects safely
+    let careerProspects: string[] = [];
+    if (typeof editingCourse.careerProspects === 'string') {
+      careerProspects = editingCourse.careerProspects.split(',').map(item => item.trim());
+    } else if (Array.isArray(editingCourse.careerProspects)) {
+      careerProspects = editingCourse.careerProspects;
+    }
 
     const updatedCourse: Course = {
       ...editingCourse,
@@ -135,12 +143,20 @@ export default function AdminCourses() {
   };
 
   const handleNewCourseChange = (field: string, value: string) => {
-    setNewCourse((prev) => ({ ...prev, [field]: value }));
+    if (field === 'careerProspects') {
+      setNewCourse((prev) => ({ ...prev, [field]: value }));
+    } else {
+      setNewCourse((prev) => ({ ...prev, [field]: value }));
+    }
   };
 
   const handleEditingCourseChange = (field: string, value: string) => {
     if (!editingCourse) return;
-    setEditingCourse({ ...editingCourse, [field]: value });
+    if (field === 'careerProspects') {
+      setEditingCourse({ ...editingCourse, [field]: value });
+    } else {
+      setEditingCourse({ ...editingCourse, [field]: value });
+    }
   };
 
   return (
