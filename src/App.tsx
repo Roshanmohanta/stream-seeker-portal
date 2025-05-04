@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +19,8 @@ import Colleges from "./pages/Colleges";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminOverview from "./pages/Admin/AdminOverview";
 import AdminCourses from "./pages/Admin/AdminCourses";
+import AdminColleges from "./pages/Admin/AdminColleges";
+import AdminProfile from "./pages/Admin/AdminProfile";
 import { User } from "./lib/types";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,8 @@ const App = () => {
                 <Route path="/admin" element={<AdminDashboard currentUser={currentUser} />}>
                   <Route index element={<AdminOverview />} />
                   <Route path="courses" element={<AdminCourses />} />
+                  <Route path="colleges" element={<AdminColleges />} />
+                  <Route path="profile" element={<AdminProfile />} />
                   {/* Other admin routes will be added here */}
                 </Route>
                 
