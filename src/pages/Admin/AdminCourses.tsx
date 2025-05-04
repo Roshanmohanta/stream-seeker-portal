@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -61,7 +62,9 @@ export default function AdminCourses() {
     
     // Handle careerProspects safely
     let careerProspects: string[] = [];
+    
     if (typeof newCourse.careerProspects === 'string') {
+      // This case should never happen with our current implementation
       careerProspects = newCourse.careerProspects.split(',').map(item => item.trim());
     } else if (Array.isArray(newCourse.careerProspects)) {
       careerProspects = newCourse.careerProspects;
@@ -101,8 +104,10 @@ export default function AdminCourses() {
 
     // Handle careerProspects safely
     let careerProspects: string[] = [];
+    
     if (typeof editingCourse.careerProspects === 'string') {
-      careerProspects = editingCourse.careerProspects.split(',').map(item => item.trim());
+      // This case should never happen with our current implementation
+      careerProspects = (editingCourse.careerProspects as unknown as string).split(',').map(item => item.trim());
     } else if (Array.isArray(editingCourse.careerProspects)) {
       careerProspects = editingCourse.careerProspects;
     }
@@ -144,7 +149,9 @@ export default function AdminCourses() {
 
   const handleNewCourseChange = (field: string, value: string) => {
     if (field === 'careerProspects') {
-      setNewCourse((prev) => ({ ...prev, [field]: value }));
+      // Handle careerProspects as an array
+      const prospectsArray = value.split(',').map(item => item.trim());
+      setNewCourse((prev) => ({ ...prev, [field]: prospectsArray }));
     } else {
       setNewCourse((prev) => ({ ...prev, [field]: value }));
     }
@@ -152,8 +159,11 @@ export default function AdminCourses() {
 
   const handleEditingCourseChange = (field: string, value: string) => {
     if (!editingCourse) return;
+    
     if (field === 'careerProspects') {
-      setEditingCourse({ ...editingCourse, [field]: value });
+      // Handle careerProspects as an array
+      const prospectsArray = value.split(',').map(item => item.trim());
+      setEditingCourse({ ...editingCourse, [field]: prospectsArray });
     } else {
       setEditingCourse({ ...editingCourse, [field]: value });
     }
