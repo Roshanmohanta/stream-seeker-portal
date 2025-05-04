@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +13,9 @@ import CourseDetail from "./pages/CourseDetail";
 import CollegeDetail from "./pages/CollegeDetail";
 import Jobs from "./pages/Jobs";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Courses from "./pages/Courses";
+import Colleges from "./pages/Colleges";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminOverview from "./pages/Admin/AdminOverview";
 import AdminCourses from "./pages/Admin/AdminCourses";
@@ -35,10 +39,13 @@ const App = () => {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Index />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/colleges" element={<Colleges />} />
                 <Route path="/course/:id" element={<CourseDetail />} />
                 <Route path="/college/:id" element={<CollegeDetail />} />
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
+                <Route path="/register" element={<Register />} />
                 
                 {/* Admin Routes */}
                 <Route path="/admin" element={<AdminDashboard currentUser={currentUser} />}>
