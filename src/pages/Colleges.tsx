@@ -12,30 +12,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { College } from "@/lib/types";
-import { getMockColleges } from "@/lib/mockData";
+import { colleges } from "@/lib/mockData";
 
 const Colleges = () => {
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
-  const [type, setType] = useState("all");
-  const [colleges, setColleges] = useState<College[]>(getMockColleges());
+  const [collegesList, setColleges] = useState<College[]>(colleges);
 
   const handleSearch = () => {
-    const filtered = getMockColleges().filter(college => {
+    const filtered = colleges.filter(college => {
       const matchesKeyword = keyword 
-        ? college.name.toLowerCase().includes(keyword.toLowerCase()) ||
-          college.description.toLowerCase().includes(keyword.toLowerCase())
+        ? college.name.toLowerCase().includes(keyword.toLowerCase())
         : true;
       
       const matchesLocation = location
         ? college.location.toLowerCase().includes(location.toLowerCase())
         : true;
-      
-      const matchesType = type !== "all"
-        ? college.type === type
-        : true;
 
-      return matchesKeyword && matchesLocation && matchesType;
+      return matchesKeyword && matchesLocation;
     });
 
     setColleges(filtered);
@@ -44,8 +38,7 @@ const Colleges = () => {
   const clearFilters = () => {
     setKeyword("");
     setLocation("");
-    setType("all");
-    setColleges(getMockColleges());
+    setColleges(colleges);
   };
 
   return (
@@ -94,22 +87,6 @@ const Colleges = () => {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="type">College Type</Label>
-                    <Select value={type} onValueChange={setType}>
-                      <SelectTrigger id="type">
-                        <SelectValue placeholder="Select college type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Types</SelectItem>
-                        <SelectItem value="Public">Public</SelectItem>
-                        <SelectItem value="Private">Private</SelectItem>
-                        <SelectItem value="Deemed">Deemed</SelectItem>
-                        <SelectItem value="Autonomous">Autonomous</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
                   <div className="pt-2 space-y-3">
                     <Button
                       className="w-full"
@@ -138,14 +115,14 @@ const Colleges = () => {
                   College Listings
                 </h2>
                 <div className="text-gray-600">
-                  {colleges.length} college{colleges.length !== 1 ? "s" : ""} found
+                  {collegesList.length} college{collegesList.length !== 1 ? "s" : ""} found
                 </div>
               </div>
             </div>
 
-            {colleges.length > 0 ? (
+            {collegesList.length > 0 ? (
               <div className="space-y-6">
-                {colleges.map((college) => (
+                {collegesList.map((college) => (
                   <div
                     key={college.id}
                     className="bg-white rounded-xl shadow-lg overflow-hidden transition-all border border-transparent hover:border-primary"
@@ -186,23 +163,6 @@ const Colleges = () => {
                             </svg>
                             {college.location}
                           </span>
-                          <span className="flex items-center mr-4">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4 mr-1"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                              />
-                            </svg>
-                            {college.type} College
-                          </span>
                           <span className="flex items-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -218,23 +178,17 @@ const Colleges = () => {
                                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                               />
                             </svg>
-                            Fees: {college.fees}
+                            Fees: ₹{college.admissionFees.toLocaleString()}
                           </span>
                         </div>
 
-                        <p className="text-gray-600 mb-4 line-clamp-2">
-                          {college.description}
-                        </p>
-
                         <div className="flex flex-wrap gap-2 mb-4">
-                          {college.ranking && (
-                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                              Ranking: {college.ranking}
-                            </span>
-                          )}
-                          {college.accreditation && (
+                          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                            Rating: {college.rating}
+                          </span>
+                          {college.companies && college.companies.length > 0 && (
                             <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                              {college.accreditation}
+                              {college.companies.length} Recruiting Companies
                             </span>
                           )}
                         </div>

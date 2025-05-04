@@ -13,17 +13,17 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Course, StreamType } from "@/lib/types";
-import { getAllCourses } from "@/lib/mockData";
+import { courses } from "@/lib/mockData";
 
 const Courses = () => {
   const [keyword, setKeyword] = useState("");
   const [stream, setStream] = useState<StreamType | "all">("all");
   const [duration, setDuration] = useState("any");
-  const [courses, setCourses] = useState<Course[]>(getAllCourses());
+  const [coursesList, setCourses] = useState<Course[]>(courses);
   const [activeTab, setActiveTab] = useState<StreamType | "all">("all");
 
   const handleSearch = () => {
-    const filtered = getAllCourses().filter((course) => {
+    const filtered = courses.filter((course) => {
       const matchesKeyword = keyword
         ? course.title.toLowerCase().includes(keyword.toLowerCase()) ||
           course.description.toLowerCase().includes(keyword.toLowerCase())
@@ -47,16 +47,16 @@ const Courses = () => {
     setKeyword("");
     setStream("all");
     setDuration("any");
-    setCourses(getAllCourses());
+    setCourses(courses);
   };
 
   const handleTabChange = (value: string) => {
     setActiveTab(value as StreamType | "all");
     if (value === "all") {
-      setCourses(getAllCourses());
+      setCourses(courses);
     } else {
       setCourses(
-        getAllCourses().filter(course => course.stream === value)
+        courses.filter(course => course.stream === value)
       );
     }
   };
@@ -108,7 +108,10 @@ const Courses = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="stream">Stream</Label>
-                    <Select value={stream} onValueChange={setStream}>
+                    <Select 
+                      value={stream} 
+                      onValueChange={(value) => setStream(value as StreamType | "all")}
+                    >
                       <SelectTrigger id="stream">
                         <SelectValue placeholder="Select stream" />
                       </SelectTrigger>
@@ -165,14 +168,14 @@ const Courses = () => {
                   Course Listings
                 </h2>
                 <div className="text-gray-600">
-                  {courses.length} course{courses.length !== 1 ? "s" : ""} found
+                  {coursesList.length} course{coursesList.length !== 1 ? "s" : ""} found
                 </div>
               </div>
             </div>
 
-            {courses.length > 0 ? (
+            {coursesList.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {courses.map((course) => (
+                {coursesList.map((course) => (
                   <Link
                     key={course.id}
                     to={`/course/${course.id}`}
