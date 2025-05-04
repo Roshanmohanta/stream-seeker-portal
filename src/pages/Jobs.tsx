@@ -90,7 +90,7 @@ const Jobs = () => {
                         <SelectValue placeholder="Select salary range" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any salary</SelectItem>
+                        <SelectItem value="any">Any salary</SelectItem>
                         <SelectItem value="5">₹5+ LPA</SelectItem>
                         <SelectItem value="10">₹10+ LPA</SelectItem>
                         <SelectItem value="15">₹15+ LPA</SelectItem>
@@ -106,7 +106,7 @@ const Jobs = () => {
                         <SelectValue placeholder="Select industry" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Industries</SelectItem>
+                        <SelectItem value="all">All Industries</SelectItem>
                         <SelectItem value="Technology">Technology</SelectItem>
                         <SelectItem value="Banking & Finance">Banking & Finance</SelectItem>
                         <SelectItem value="Healthcare">Healthcare</SelectItem>
@@ -124,7 +124,7 @@ const Jobs = () => {
                         <SelectValue placeholder="Select experience" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any Experience</SelectItem>
+                        <SelectItem value="any">Any Experience</SelectItem>
                         <SelectItem value="0-2">0-2 years</SelectItem>
                         <SelectItem value="2-5">2-5 years</SelectItem>
                         <SelectItem value="5-10">5-10 years</SelectItem>

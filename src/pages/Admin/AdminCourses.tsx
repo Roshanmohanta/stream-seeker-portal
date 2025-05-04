@@ -65,7 +65,7 @@ export default function AdminCourses() {
     
     if (typeof newCourse.careerProspects === 'string') {
       // This case should never happen with our current implementation
-      careerProspects = newCourse.careerProspects.split(',').map(item => item.trim());
+      careerProspects = (newCourse.careerProspects as string).split(',').map(item => item.trim());
     } else if (Array.isArray(newCourse.careerProspects)) {
       careerProspects = newCourse.careerProspects;
     }
