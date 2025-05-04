@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CourseDetail from "./pages/CourseDetail";
 import CollegeDetail from "./pages/CollegeDetail";
+import JobDetail from "./pages/JobDetail";
 import Jobs from "./pages/Jobs";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path="/course/:id" element={<CourseDetail />} />
                 <Route path="/college/:id" element={<CollegeDetail />} />
                 <Route path="/jobs" element={<Jobs />} />
+                <Route path="/job/:id" element={<JobDetail />} />
                 <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
                 <Route path="/register" element={<Register />} />
                 
